@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="love_btn" @click="++count">
+        <div class="heart" :class="{animate: isClicked }" @click="isClicked = !isClicked"></div>
+        <div class="counter">{{count}}</div>
+      </div>
+    </div>
+  </body>
+  <style>
+    .love_btn{
+      position: relative;
+      margin: 0 auto;
+      cursor: pointer;
+      display: flex;
+      scale: .3;
+    }
+    .heart {
+      position: absolute;
+      position: relative;
+      height: 241px;
+      width: 500px;
+      background-image: url("https://res.cloudinary.com/ddkef5waq/image/upload/v1695122384/iag/iagX_v2w5vh.png");
+      background-position: left;
+      background-repeat: no-repeat;
+      background-size: 3800%;
+    }
+    .heart:hover {
+      transition: .3s;
+      opacity: 1;
+    }
+    .heart::after {
+      content: url("https://res.cloudinary.com/ddkef5waq/image/upload/v1695122689/iag/twHeart_zzc5bk.png");
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .heart:hover::after{
+      transition: .3s;
+      opacity: 0;
+    }
+    .heart.animate::after{
+      transition: .3s;
+      opacity: 0;
+    }
+    .heart.animate {
+      opacity: 1;
+      animation: heart-burst 1s steps(37);
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes heart-burst {
+      from {
+        background-position: left;
+      }
+      to {
+        background-position: right;
+      }
+    }
+    .counter{
+      font-size: xx-large;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+  
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+  </script>
+  <script type="module">
+      import { createApp, ref } from 'vue'
+
+    createApp({
+      setup() {
+        const isClicked = ref(false)
+        const count = ref(0);
+        return {
+          isClicked,
+          count
+        };
+      },
+    }).mount("#app");
+  </script>
+</html>
