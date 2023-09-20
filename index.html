@@ -8,19 +8,25 @@
   </head>
   <body>
     <div id="app">
-      <div class="love_btn" @click="++count">
-        <div class="heart" :class="{animate: isClicked }" @click="isClicked = !isClicked"></div>
-        <div class="counter">{{count}}</div>
+      <div class="love_btn" @click="() => {isClicked = !isClicked; isClicked?++count:--count;}">
+        <div class="heart" :class="{animate: isClicked }"></div>
+        <div class="counter" :class="{heart_is_active:isClicked}">{{count}}</div>
       </div>
     </div>
   </body>
   <style>
+    :root{
+      --btn-color: #606468;
+      --btn-active-color: #F91880;
+    }
     .love_btn{
       position: relative;
       margin: 0 auto;
       cursor: pointer;
       display: flex;
-      scale: .3;
+      width: fit-content;
+      gap: 2rem;
+      scale: .2;
     }
     .heart {
       position: absolute;
@@ -38,15 +44,12 @@
     }
     .heart::after {
       content: url("https://res.cloudinary.com/ddkef5waq/image/upload/v1695122689/iag/twHeart_zzc5bk.png");
-      position: absolute;
-      width: 100%;
-      height: 100%;
     }
-    .heart:hover::after{
+    .love_btn:hover .heart::after{
       transition: .3s;
       opacity: 0;
     }
-    .heart.animate::after{
+    .love_btn .animate::after{
       transition: .3s;
       opacity: 0;
     }
@@ -65,8 +68,14 @@
       }
     }
     .counter{
-      font-size: xx-large;
+      font-size: 160px;
+      color: var(--btn-color);
+      align-self: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .love_btn:hover .counter, .heart_is_active{
+      color: var(--btn-active-color);
+      transition: .3s;
     }
   
   </style>
